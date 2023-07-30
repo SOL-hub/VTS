@@ -1,6 +1,11 @@
 <template>
   <li>
-    <span class="item-wrap complete">{{ todoItem }}</span>
+    <span
+      class="item-wrap"
+      @click="toggleItem"
+      :class="todoItem.done ? 'complete' : null"
+      >{{ todoItem.title }}</span
+    >
     <!-- <button @click="$emit('delete')">삭제</button> -->
     <button @click="removeItem">삭제</button>
   </li>
@@ -8,13 +13,19 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { PropType } from "vue/types/v3-component-props";
+import { Todo } from "../App.vue";
 
 export default Vue.extend({
   props: {
-    todoItem: String,
+    todoItem: Object as PropType<Todo>,
     index: Number,
   },
+
   methods: {
+    toggleItem() {
+      this.$emit("toggle", this.todoItem, this.index);
+    },
     removeItem() {
       this.$emit("remove", this.index);
     },

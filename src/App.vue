@@ -14,6 +14,7 @@
             :todoItem="todoItem"
             @remove="removeTodoItem"
             :index="index"
+            @toggle="toggleTodoItemComplete"
           />
         </ul>
       </div>
@@ -40,7 +41,7 @@ const storage = {
   },
 };
 
-interface Todo {
+export interface Todo {
   title: string;
   done: boolean;
 }
@@ -80,6 +81,15 @@ export default Vue.extend({
     removeTodoItem(index: number) {
       console.log("remove", index);
       this.todoItems.splice(index, 1);
+      storage.save(this.todoItems);
+    },
+
+    toggleTodoItemComplete(todoItem: Todo, index: number) {
+      this.todoItems.splice(index, 1, {
+        // title: todoItem.title,
+        ...todoItem,
+        done: !todoItem.done,
+      });
       storage.save(this.todoItems);
     },
   },
