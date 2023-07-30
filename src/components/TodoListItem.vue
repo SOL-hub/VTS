@@ -1,11 +1,8 @@
 <template>
   <li>
-    <span
-      class="item-wrap"
-      @click="toggleItem"
-      :class="todoItem.done ? 'complete' : null"
-      >{{ todoItem.title }}</span
-    >
+    <span class="item-wrap" @click="toggleItem" :class="todoItemClass">{{
+      todoItem.title
+    }}</span>
     <!-- <button @click="$emit('delete')">삭제</button> -->
     <button @click="removeItem">삭제</button>
   </li>
@@ -20,6 +17,12 @@ export default Vue.extend({
   props: {
     todoItem: Object as PropType<Todo>,
     index: Number,
+  },
+
+  computed: {
+    todoItemClass(): string | null {
+      return this.todoItem.done ? "complete" : null;
+    },
   },
 
   methods: {
