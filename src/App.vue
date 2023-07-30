@@ -40,12 +40,17 @@ const storage = {
   },
 };
 
+interface Todo {
+  title: string;
+  done: boolean;
+}
+
 export default Vue.extend({
   components: { TodoInput, TodoListItem },
   data() {
     return {
       todoText: "",
-      todoItems: [] as any[],
+      todoItems: [] as Todo[],
     };
   },
   methods: {
@@ -55,7 +60,11 @@ export default Vue.extend({
 
     addTodoItem() {
       const value = this.todoText;
-      this.todoItems.push(value);
+      const todo: Todo = {
+        title: value,
+        done: false,
+      };
+      this.todoItems.push(todo);
       storage.save(this.todoItems);
       // localStorage.setItem(value, value);
       this.initTodoText();
@@ -70,6 +79,8 @@ export default Vue.extend({
 
     removeTodoItem(index: number) {
       console.log("remove", index);
+      this.todoItems.splice(index, 1);
+      storage.save(this.todoItems);
     },
   },
   created() {
