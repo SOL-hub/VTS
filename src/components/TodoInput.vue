@@ -10,11 +10,22 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  props: ["item"], //item이라는 프롭스 속성을 받을 준비
+  // props: ["item"],
+  props: {
+    item: {
+      type: String,
+      required: true,
+    },
+  },
   methods: {
-    handleInput(event: any) {
-      event.target.value;
-      this.$emit("input", event.target.value);
+    handleInput(event: InputEvent) {
+      // event.target.value;
+      // if (!event.target) {
+      //   return;
+      // }
+      const eventTarget = event.target as HTMLInputElement;
+      // this.$emit("input", event.target.value);
+      this.$emit("input", eventTarget.value);
     },
     addTodo() {
       this.$emit("add");

@@ -2,6 +2,7 @@
   <div>
     <h1>VTS</h1>
     <TodoInput :item="todoText" @input="updateTodoText" @add="addTodoItem" />
+    <!-- <TodoInput v-model="todoText" @add="addTodoItem" /> -->
   </div>
 </template>
 
@@ -17,7 +18,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    updateTodoText(value: any) {
+    updateTodoText(value: string) {
       this.todoText = value;
     },
 
